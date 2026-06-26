@@ -9,20 +9,20 @@ A browser-first AI briefing app that pulls live weather, news, traffic, and sche
 
 ## Screenshots
 
-<figure>
-  <img src="doc/screenshots/landing-page.png" alt="Landing page screenshot">
-  <figcaption><em>Landing page with briefing controls and summary cards.</em></figcaption>
-</figure>
+### Landing page
 
-<figure>
-  <img src="doc/screenshots/app-working.png" alt="Live agent progress screenshot">
-  <figcaption><em>Live agent progress view showing ongoing data retrieval and status.</em></figcaption>
-</figure>
+![Landing page screenshot](doc/screenshots/landing-page.png)
+*Landing page with briefing controls and summary cards.*
 
-<figure>
-  <img src="doc/screenshots/app-response.png" alt="Final briefing response screenshot">
-  <figcaption><em>Final merged briefing with spoken playback and response details.</em></figcaption>
-</figure>
+### Agent progress
+
+![Agent progress screenshot](doc/screenshots/app-working.png)
+*Live agent progress view showing ongoing data retrieval and status.*
+
+### Briefing response
+
+![Briefing response screenshot](doc/screenshots/app-response.png)
+*Final merged briefing with spoken playback and response details.*
 
 ## Features
 
