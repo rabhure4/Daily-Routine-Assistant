@@ -1,0 +1,31 @@
+user_name: Rahul
+location: Noida, India
+timezone: Asia/Kolkata
+topics:
+- Artificial Intelligence
+- Tech
+- India
+traffic_from: Home, Noida
+traffic_to: Office, Noida
+traffic_stops: []
+briefing_time: 07:00
+briefing_times:
+- 07:00
+agenda:
+  monday:
+  - 09:00 - Team standup
+  - 11:00 - Product review
+  tuesday:
+  - 09:00 - Team standup
+  - 14:00 - Client call
+  wednesday:
+  - 09:00 - Team standup
+  - 15:00 - 1:1 with manager
+  thursday:
+  - 09:00 - Team standup
+  - 10:00 - Sprint planning
+  friday:
+  - 09:00 - Team standup
+  - 16:00 - Weekly retrospective
+  saturday: []
+  sunday: []
