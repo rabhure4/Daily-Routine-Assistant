@@ -1,6 +1,6 @@
 ﻿# Daily Routine Assistant
 
-Your personalised AI morning briefing, spoken aloud in the browser. Four specialist agents run in parallel to gather weather, news, traffic, and schedule context; then an LLM merges everything into one coherent briefing script for browser Web TTS.
+A browser-first AI briefing app that pulls live weather, news, traffic, and schedule context into one spoken morning summary. Four specialist agents run in parallel and LangGraph synthesizes their outputs into a single coherent briefing for the browser.
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688?logo=fastapi&logoColor=white)
@@ -9,11 +9,20 @@ Your personalised AI morning briefing, spoken aloud in the browser. Four special
 
 ## Screenshots
 
-![Landing page](doc/screenshots/landing-page.png)
+<figure>
+  <img src="doc/screenshots/landing-page.png" alt="Landing page screenshot">
+  <figcaption><em>Landing page with briefing controls and summary cards.</em></figcaption>
+</figure>
 
-![Agents working](doc/screenshots/app-working.png)
+<figure>
+  <img src="doc/screenshots/app-working.png" alt="Live agent progress screenshot">
+  <figcaption><em>Live agent progress view showing ongoing data retrieval and status.</em></figcaption>
+</figure>
 
-![Briefing response](doc/screenshots/app-response.png)
+<figure>
+  <img src="doc/screenshots/app-response.png" alt="Final briefing response screenshot">
+  <figcaption><em>Final merged briefing with spoken playback and response details.</em></figcaption>
+</figure>
 
 ## Features
 
@@ -36,10 +45,12 @@ Your personalised AI morning briefing, spoken aloud in the browser. Four special
 ## What Makes It Agentic
 
 - The workflow is decomposed into independent agents with focused responsibilities instead of one large prompt.
-- LangGraph coordinates parallel execution, convergence, and final synthesis.
-- Each agent owns a separate external tool or context source: DuckDuckGo news search, Open-Meteo weather, TomTom traffic, and local schedule config.
+- Each agent owns its own retrieval, reasoning, and formatting step, which keeps the system modular and easier to extend.
+- LangGraph orchestrates parallel execution, convergence, and final synthesis instead of relying on a single monolithic pipeline.
+- Each agent owns a concrete external tool or context source: DuckDuckGo news search, Open-Meteo weather, TomTom traffic, and local schedule config.
 - The merger agent reasons over multiple partial results and produces a single user-facing briefing.
-- The system degrades gracefully: failed sources return warnings while successful agents still contribute to the final response.
+- Agent-level traces provide transparent progress feedback while the system works.
+- Failed sources are isolated, so remaining agents can continue contributing useful information.
 
 ## Tech Stack
 
@@ -202,13 +213,28 @@ Notes:
 - The final natural-language briefing needs a configured LLM provider; if the merger call fails, the backend falls back to concatenating available sections.
 - Speech uses the browser Web Speech API. There is no backend TTS service or TTS API key.
 
+## Privacy & Security
+
+- User preferences are stored locally in `backend/user_config.yaml`; no personal schedule data is shared unless external APIs require it.
+- Keep API keys and secrets in `backend/.env` and never commit them to source control.
+- Browser speech playback happens on the client side via the Web Speech API.
+- External API responses may contain personal or location-based data, so secure your API keys and service endpoints.
+- Tighten CORS and cross-origin rules before deploying beyond local development.
+
+## Production Readiness
+
+- Run the backend behind HTTPS and a process manager such as systemd, Docker, or a cloud-hosted service.
+- Use secure secret storage for `.env` values and do not include them in the repo.
+- Remove local caches, logs, and generated files from source control before production deployment.
+- Validate external API responses and handle failures gracefully in live environments.
+
 ## Configuration
 
 ### `user_config.yaml` field reference
 
 | Field | Description |
 |---|---|
-| `user_name` | Your first name, used in the greeting |
+| `user_name` | The user's first name, used in the greeting |
 | `location` | City + country for weather and traffic, for example `"Noida, India"` |
 | `timezone` | IANA timezone, for example `"Asia/Kolkata"` |
 | `topics` | News topics used for DuckDuckGo lookup |
@@ -239,7 +265,7 @@ After the parallel agents finish, `backend/nodes/merger.py` asks the configured 
 
 ## Use Cases
 
-- Personal morning briefing before work.
+- Personalized morning briefing.
 - Commute planning with live route context.
 - Daily prep assistant for meetings and topic monitoring.
 - Starter template for multi-agent dashboard applications.
@@ -277,7 +303,7 @@ Example response shape:
     {
       "type": "traffic",
       "title": "Traffic",
-      "content": "Route: Sector 107, Noida -> Sector 132, Noida. Total time: 32 min..."
+      "content": "Route: Sector 107, Noida -> Sector 132, Noida. Total time: 32 min with moderate delay..."
     },
     {
       "type": "news",

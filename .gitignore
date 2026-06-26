@@ -8,6 +8,7 @@ venv/
 .env
 backend/.env
 backend/user_config.yaml
+backend/.cache/
 
 # Node / frontend build output
 node_modules/
